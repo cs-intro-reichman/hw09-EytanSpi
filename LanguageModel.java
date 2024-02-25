@@ -124,17 +124,20 @@ public class LanguageModel {
 
     public static void main(String[] args) {
 
-     //train test
-        LanguageModel lm = new LanguageModel(2);
-        lm.train("galileocorpus.txt");
-        System.out.println(lm);
-    
+    /* train test
+       LanguageModel lm = new LanguageModel(2);
+       lm.train("galileocorpus.txt");
+       System.out.println(lm);
+    */
 
     /* stress test
         String word = "committee ";
         List list = new List();
+
         for (int i = 0; i<word.length(); i++) {
+            System.out.println(i);
             list.update(word.charAt(i));
+            System.out.println(list);
         }        
     
         int[] arr = new int[word.length()];
@@ -145,13 +148,13 @@ public class LanguageModel {
         for (int i=1; i<=10000000; i++) {
             char ch = lm.getRandomChar(list);
             switch (ch) {
-                case 'c': { arr[6]++; break; }
-                case 'o': { arr[5]++; break; }
-                case 'm': { arr[4]++; break; }
+                case 'c': { arr[0]++; break; }
+                case 'o': { arr[1]++; break; }
+                case 'm': { arr[2]++; break; }
                 case 'i': { arr[3]++; break; }
-                case 't': { arr[2]++; break; }
-                case 'e': { arr[1]++; break; }
-                case ' ': { arr[0]++; break; }
+                case 't': { arr[4]++; break; }
+                case 'e': { arr[5]++; break; }
+                case ' ': { arr[6]++; break; }
             }
        }
         for (int i=0; i<7; i++) {

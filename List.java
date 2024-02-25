@@ -33,11 +33,14 @@ public class List {
         first = newNode;
         size++;
     }
+
     public void add(char chr) {
         if (first == null) {
-            addFirst(chr);
+            first = new Node(new CharData(chr), null);
+            size++;
+            return;
         }
-        Node newNode = new Node(new CharData(chr), first);
+        Node newNode = new Node(new CharData(chr), null);
         Node pointer = first;
         while (pointer.next != null) {
             pointer = pointer.next;
@@ -51,9 +54,9 @@ public class List {
         ListIterator list = new ListIterator(first);
         String s = "";
         while (list.hasNext()) {
-            s = list.next().toString() + " " + s;
+            s += list.next().toString() + " ";
         }
-        if (s!=null) {
+        if (s!="") {
             s = s.substring(0,s.length()-1); // take off final space ' '
         }
         s = "(" + s + ")";
@@ -149,4 +152,17 @@ public class List {
         // Returns an iterator that starts in that element
 	    return new ListIterator(current);
     }
+
+    /* tests
+    public static void main (String[] args) {
+
+        String word = "committee";
+        List list = new List();
+        for (int i=0; i<word.length(); i++) {
+            list.update(word.charAt(i));
+        }
+        System.out.println(list);
+    }
+    */
+
 }
