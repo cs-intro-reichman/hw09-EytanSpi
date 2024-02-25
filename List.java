@@ -34,7 +34,7 @@ public class List {
         size++;
     }
 
-    public void add(char chr) {
+   /* public void add(char chr) {
         if (first == null) {
             first = new Node(new CharData(chr), null);
             size++;
@@ -48,6 +48,23 @@ public class List {
         pointer.next = newNode;
         size++;
     }
+    */
+
+    /** GIVE Textual representation of this list. */
+/* 
+    public String toString() {
+        ListIterator list = new ListIterator(first);
+        String s = "";
+        while (list.hasNext()) {
+            s += list.next().toString() + " " + s;
+        }
+        if (s!="") {
+            s = s.substring(0,s.length()-1); // take off final space ' '
+        }
+        s = "(" + s + ")";
+        return s;
+    }
+*/
     
     /** GIVE Textual representation of this list. */
     public String toString() {
@@ -83,7 +100,7 @@ public class List {
     public void update(char chr) {
         int index = indexOf(chr);
         if (indexOf(chr) == -1) {
-            add(chr);
+            addFirst(chr);
         } else {
             CharData chrD = get(index);
             chrD.count++;
