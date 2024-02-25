@@ -33,19 +33,71 @@ public class LanguageModel {
 
     /** Builds a language model from the text in the given file (the corpus). */
 	public void train(String fileName) {
-		// Your code goes here
-	}
+        String window = "";
+        char c;
+        In in = new In(fileName);
+
+        // build first window
+        for (int i = 1; i <= windowLength; i++) { 
+            if (!in.hasNextChar()) return;
+            window += in.readChar();
+        }
+
+        while (!in.isEmpty()) {
+            c = in.readChar();
+            List probs = CharDataMap.get(window);
+            if (probs == null) {
+                probs = new List ();
+                CharDataMap.put(window, probs);
+            }
+            probs.update(c);
+
+            // move window fowards by 1 character
+            window += c;
+            window = window.substring(1, window.length());
+        }
+        // The entire file has been processed, and all the characters have been counted.
+        // Proceeds to compute and set the p and cp fields of all the CharData objects
+        // in each linked list in the map.
+
+        for (String key : CharDataMap.keySet()) {
+            List probs = CharDataMap.get(key);
+            calculateProbabilities(probs);
+        }
+            
+    }
 
     // Computes and sets the probabilities (p and cp fields) of all the
 	// characters in the given list. */
 	public void calculateProbabilities(List probs) {				
-		// Your code goes here
-	}
+        int numOfLetters = 0;
+        Node pointer = probs.first;
+        while (pointer != null) {
+            numOfLetters += pointer.cd.count;
+            pointer = pointer.next;
+        }
+        pointer = probs.first;
+        double comCP = 0;
+        while (pointer != null) {
+            CharData cd = pointer.cd;
+            cd.p = (double)cd.count/numOfLetters;
+            comCP += cd.p;
+            cd.cp = comCP;
+            pointer = pointer.next;
+        }
+    }
 
     // Returns a random character from the given probabilities list.
 	public char getRandomChar(List probs) {
-		// Your code goes here
+        double rand = Math.random();
+        Node pointer = probs.first;
+        while (pointer != null) {
+            if (rand < pointer.cd.cp) return pointer.cd.chr;
+            pointer = pointer.next;
+        }
+        return ' '; // will never reach this return
 	}
+
 
     /**
 	 * Generates a random text, based on the probabilities that were learned during training. 
@@ -56,6 +108,8 @@ public class LanguageModel {
 	 */
 	public String generate(String initialText, int textLength) {
 		// Your code goes here
+        return "0";
+
 	}
 
     /** Returns a string representing the map of this language model. */
@@ -69,6 +123,43 @@ public class LanguageModel {
 	}
 
     public static void main(String[] args) {
-		// Your code goes here
+
+    /* train test
+        LanguageModel lm = new LanguageModel(2);
+        lm.train("galileocorpus.txt");
+        System.out.println(lm);
+    */
+    
+    /* stress test
+        String word = "committee ";
+        List list = new List();
+        for (int i = 0; i<word.length(); i++) {
+            list.update(word.charAt(i));
+        }        
+    
+        int[] arr = new int[word.length()];
+        LanguageModel lm = new LanguageModel(10);
+        lm.calculateProbabilities(list);  
+        System.out.println(list);
+  
+        for (int i=1; i<=10000000; i++) {
+            char ch = lm.getRandomChar(list);
+            switch (ch) {
+                case 'c': { arr[6]++; break; }
+                case 'o': { arr[5]++; break; }
+                case 'm': { arr[4]++; break; }
+                case 'i': { arr[3]++; break; }
+                case 't': { arr[2]++; break; }
+                case 'e': { arr[1]++; break; }
+                case ' ': { arr[0]++; break; }
+            }
+       }
+        for (int i=0; i<7; i++) {
+            System.out.print(arr[i] + ", ");
+        }
+        System.out.println();
+        System.out.println();
+        System.out.println();
+    */
     }
 }

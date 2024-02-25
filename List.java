@@ -6,7 +6,7 @@
 public class List {
 
     // Points to the first node in this list
-    private Node first;
+    Node first;
 
     // The number of elements in this list
     private int size;
@@ -39,7 +39,7 @@ public class List {
         ListIterator list = new ListIterator(first);
         String s = "(";
         while (list.hasNext()) {
-            s += list.next().toString() + " ";
+            s += list.next().toString();
         }
         s += ")";
         return s;
