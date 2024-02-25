@@ -124,12 +124,12 @@ public class LanguageModel {
 
     public static void main(String[] args) {
 
-    /* train test
+     //train test
         LanguageModel lm = new LanguageModel(2);
         lm.train("galileocorpus.txt");
         System.out.println(lm);
-    */
     
+
     /* stress test
         String word = "committee ";
         List list = new List();
