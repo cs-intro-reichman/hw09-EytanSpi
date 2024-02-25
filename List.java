@@ -33,6 +33,18 @@ public class List {
         first = newNode;
         size++;
     }
+    public void add(char chr) {
+        if (first == null) {
+            addFirst(chr);
+        }
+        Node newNode = new Node(new CharData(chr), first);
+        Node pointer = first;
+        while (pointer.next != null) {
+            pointer = pointer.next;
+        }
+        pointer.next = newNode;
+        size++;
+    }
     
     /** GIVE Textual representation of this list. */
     public String toString() {
@@ -68,7 +80,7 @@ public class List {
     public void update(char chr) {
         int index = indexOf(chr);
         if (indexOf(chr) == -1) {
-            addFirst(chr);
+            add(chr);
         } else {
             CharData chrD = get(index);
             chrD.count++;
