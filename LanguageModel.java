@@ -126,6 +126,38 @@ public class LanguageModel {
 
     public static void main(String[] args) {
     
+        // RandomChar test
+        boolean result = true;
+        LanguageModel model = new LanguageModel(3, 20);
+        String [] words = {"home","worker","william_shakespeare"};
+        char [][] expected = {
+                {'m','h','e','h'},
+                {'w','o','k','e','w','r'},
+                {'r','s','h','i','a','m','k','i','r','h','s','a','a','i','a','i','l','l','r'}
+        };
+        for (int i = 0; i < words.length; i++) {
+            List list = new List();
+            for (int j = 0; j < words[i].length(); j++) {
+                list.update(words[i].charAt(words[i].length() - 1 - j));
+            }
+            boolean res = true;
+            model.calculateProbabilities(list);
+            for (int j = 0; j < words[i].length(); j++) {
+                char actual = model.getRandomChar(list);
+                boolean temp = actual == expected[i][j];
+                if (!temp) {
+                    System.out.println("Expected: " + expected[i][j]);
+                    System.out.println("Actual: " + actual);
+                }
+                res = res && temp;
+            }
+            result = result && res;
+        } 
+        if (!result){
+            System.out.println("GetRandomChar Test failed");
+        }
+        System.out.println(result);
+
         /* calculate probabilities test
         LanguageModel model = new LanguageModel(3);
         String word = "computer_science";
