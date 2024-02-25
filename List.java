@@ -37,11 +37,14 @@ public class List {
     /** GIVE Textual representation of this list. */
     public String toString() {
         ListIterator list = new ListIterator(first);
-        String s = "(";
+        String s = "";
         while (list.hasNext()) {
-            s += list.next().toString();
+            s = list.next().toString() + " " + s;
         }
-        s += ")";
+        if (s!=null) {
+            s = s.substring(0,s.length()-1); // take off final space ' '
+        }
+        s = "(" + s + ")";
         return s;
     }
 
