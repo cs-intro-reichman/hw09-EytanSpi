@@ -89,7 +89,8 @@ public class LanguageModel {
 
     // Returns a random character from the given probabilities list.
 	public char getRandomChar(List probs) {
-        double rand = Math.random();
+    //    double rand = Math.random();
+        double rand = randomGenerator.nextDouble();
         Node pointer = probs.first;
         while (pointer != null) {
             if (rand < pointer.cd.cp) return pointer.cd.chr;
@@ -107,8 +108,15 @@ public class LanguageModel {
 	 * @return the generated text
 	 */
 	public String generate(String initialText, int textLength) {
-		// Your code goes here
-        return "0";
+        if (initialText.length() < windowLength) return initialText;
+        String result = "" + initialText;
+        for (int i=initialText.length(); i < textLength; i++) {
+            String window = result.substring(result.length() - windowLength, result.length());
+            List options = CharDataMap.get(window);
+            if (options == null) return result; // break
+            result += getRandomChar(options);
+        }
+        return result;
 
 	}
 
@@ -125,8 +133,25 @@ public class LanguageModel {
 
 
     public static void main(String[] args) {
+
+        int windowLength = Integer.parseInt(args[0]);
+        String initialText = args[1];
+        System.out.println(initialText);
+        int generatedTextLength = Integer.parseInt(args[2]);
+        Boolean randomGeneration = args[3].equals("random");
+        String fileName = args[4];
+        // Create the LanguageModel object
+        LanguageModel lm;
+        if (randomGeneration)
+            lm = new LanguageModel(windowLength);
+        else
+            lm = new LanguageModel(windowLength, 20);
+        // Trains the model, creating the map.
+        lm.train(fileName);
+        // Generates text, and prints it.
+        System.out.println(lm.generate(initialText, generatedTextLength));
     
-        // RandomChar test
+        /* RandomChar test
         boolean result = true;
         LanguageModel model = new LanguageModel(3, 20);
         String [] words = {"home","worker","william_shakespeare"};
@@ -157,6 +182,7 @@ public class LanguageModel {
             System.out.println("GetRandomChar Test failed");
         }
         System.out.println(result);
+    */
 
         /* calculate probabilities test
         LanguageModel model = new LanguageModel(3);
