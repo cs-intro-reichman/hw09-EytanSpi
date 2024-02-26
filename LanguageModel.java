@@ -110,7 +110,7 @@ public class LanguageModel {
 	public String generate(String initialText, int textLength) {
         if (initialText.length() < windowLength) return initialText;
         String result = "" + initialText;
-        for (int i=initialText.length(); i < textLength; i++) {
+        for (int i=1; i <= textLength; i++) {
             String window = result.substring(result.length() - windowLength, result.length());
             List options = CharDataMap.get(window);
             if (options == null) return result; // break
@@ -150,6 +150,7 @@ public class LanguageModel {
         lm.train(fileName);
         // Generates text, and prints it.
         System.out.println(lm.generate(initialText, generatedTextLength));
+
     
         /* RandomChar test
         boolean result = true;
