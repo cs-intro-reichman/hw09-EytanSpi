@@ -33,38 +33,6 @@ public class List {
         first = newNode;
         size++;
     }
-
-   /* public void add(char chr) {
-        if (first == null) {
-            first = new Node(new CharData(chr), null);
-            size++;
-            return;
-        }
-        Node newNode = new Node(new CharData(chr), null);
-        Node pointer = first;
-        while (pointer.next != null) {
-            pointer = pointer.next;
-        }
-        pointer.next = newNode;
-        size++;
-    }
-    */
-
-    /** GIVE Textual representation of this list. */
-/* 
-    public String toString() {
-        ListIterator list = new ListIterator(first);
-        String s = "";
-        while (list.hasNext()) {
-            s += list.next().toString() + " " + s;
-        }
-        if (s!="") {
-            s = s.substring(0,s.length()-1); // take off final space ' '
-        }
-        s = "(" + s + ")";
-        return s;
-    }
-*/
     
     /** GIVE Textual representation of this list. */
     public String toString() {
@@ -169,17 +137,5 @@ public class List {
         // Returns an iterator that starts in that element
 	    return new ListIterator(current);
     }
-
-    /* tests
-    public static void main (String[] args) {
-
-        String word = "committee";
-        List list = new List();
-        for (int i=0; i<word.length(); i++) {
-            list.update(word.charAt(i));
-        }
-        System.out.println(list);
-    }
-    */
 
 }
